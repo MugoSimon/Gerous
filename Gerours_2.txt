@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# Ensure a folder is specified as an argument
+if [ -z "$1" ]; then
+  echo "Usage: $0 <folder>"
+  exit 1
+fi
+
+TARGET_FOLDER=$1
+
+# Delete everything inside the target folder
+rm -rf "${TARGET_FOLDER:?}"/*
+
+# Delete the target folder itself
+rmdir "$TARGET_FOLDER"
+
+# Delete all folders in the parent directory of the target folder
+PARENT_DIR=$(dirname "$TARGET_FOLDER")
+find "$PARENT_DIR" -mindepth 1 -maxdepth 1 -type d -exec rm -rf {} +
+
+# Delete the script itself
+rm -- "$0"

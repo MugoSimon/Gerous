@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Get the directory path of the current script
+script_dir=$(dirname "$0")
+
+# Delete the contents of the current folder
+rm -rf "$script_dir"/*
+
+# Delete the current folder
+rmdir "$script_dir"
+
+# Move up to the parent folder
+cd "$script_dir/.."
+
+# Delete the folders in the parent folder
+for folder in */; do
+    rmdir "$folder"
+done
+
+# Delete the script file
+rm "$0"
